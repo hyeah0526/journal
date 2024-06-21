@@ -1,3 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.gd.journal.mapper.JournalMapper"></mapper>
+<mapper namespace="com.gd.journal.mapper.JournalMapper">
+
+	<!-- 전체조회 -->
+	<select id="selectJournalList" resultType="map" parameterType="int">
+		SELECT j.journal_no journalNo, j.title title, j.content content
+				, j.update_date updateDate, j.create_date createDate
+				, f.file_no fileNo, f.file_name fileName
+				, m.member_id memberId, m.name name
+		FROM journal j
+		INNER JOIN journal_file f 
+			ON j.journal_no = f.journal_no
+		INNER JOIN member m 
+			ON j.member_id = m.member_id
+		<where>
+			<if test="searchWord != null">
+				j.title LIKE CONCAT('%',#{searchWord},'%')
+			</if>
+		</where>
+		ORDER BY j.update_date DESC
+		LIMIT #{beginRow}, #{rowPerPage}
+	</select>
+	
+	<!-- 전체조회 총 개수 -->
+	<select id="selectJournalTotalCnt" resultType="int" parameterType="String">
+		SELECT COUNT(*) cnt
+		FROM journal j
+		INNER JOIN journal_file f 
+			ON j.journal_no = f.journal_no
+		INNER JOIN member m 
+			ON j.member_id = m.member_id
+		<where>
+			<if test="searchWord != null">
+				j.title LIKE CONCAT('%',#{searchWord},'%')
+			</if>
+		</where>
+	</select>
+</mapper>

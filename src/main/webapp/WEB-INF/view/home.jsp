@@ -1,4 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -56,61 +59,44 @@
         <div class="container px-4 px-lg-5">
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-md-10 col-lg-8 col-xl-7">
+                <!-- 전체조회 -->
+                <c:forEach var="b" items="${list}">
                     <!-- Post preview-->
                     <div class="post-preview">
                         <a href="post.html">
-                            <h2 class="post-title">제목제목</h2>
+                            <h2 class="post-title">${b.title}</h2>
                             <h3 class="post-subtitle">
-                            	<img alt="w" src="resources/inc/noCover.png">내용내용
+                            	<img src="/journal/img/${b.fileName}">${b.content}
                             </h3>
                         </a>
                         <p class="post-meta">
                             Posted by
-                            <a href="#!">아이디</a>
-                            on September 24, 2023
+                            <a href="#!">${b.name}(${b.memberId})</a>
+                            on ${b.updateDate}
                         </p>
                     </div>
                     <!-- Divider-->
                     <hr class="my-4" />
-                    <!-- Post preview-->
-                    <div class="post-preview">
-                        <a href="post.html"><h2 class="post-title">I believe every human has a finite number of heartbeats. I don't intend to waste any of mine.</h2></a>
-                        <p class="post-meta">
-                            Posted by
-                            <a href="#!">Start Bootstrap</a>
-                            on September 18, 2023
-                        </p>
-                    </div>
-                    <!-- Divider-->
-                    <hr class="my-4" />
-                    <!-- Post preview-->
-                    <div class="post-preview">
-                        <a href="post.html">
-                            <h2 class="post-title">Science has not yet mastered prophecy</h2>
-                            <h3 class="post-subtitle">We predict too much for the next year and yet far too little for the next ten.</h3>
-                        </a>
-                        <p class="post-meta">
-                            Posted by
-                            <a href="#!">Start Bootstrap</a>
-                            on August 24, 2023
-                        </p>
-                    </div>
-                    <!-- Divider-->
-                    <hr class="my-4" />
-                    <!-- Post preview-->
-                    <div class="post-preview">
-                        <a href="post.html">
-                            <h2 class="post-title">Failure is not an option</h2>
-                            <h3 class="post-subtitle">Many say exploration is part of our destiny, but it’s actually our duty to future generations.</h3>
-                        </a>
-                        <p class="post-meta">
-                            Posted by
-                            <a href="#!">Start Bootstrap</a>
-                            on July 8, 2023
-                        </p>
-                    </div>
-                    <!-- Divider-->
-                    <hr class="my-4" />
+				</c:forEach>
+				
+				<!-- 검색 -->
+				 <div>
+				 	<form method="get" action="${pageContext.request.contextPath}/home">
+				 		<input name="searchWord">
+				 		<a><button type="submit">searchWord</button></a>
+				 	</form>
+				 </div>
+				 
+				<!-- 페이징 -->
+				<c:if test="${currentPage > 1}">
+					<a href="${pageContext.request.contextPath}/home?currentPage=${currentPage-1}&searchWord=${searchWord}">&lt;이전</a>
+				</c:if>
+			
+				<a href="${pageContext.request.contextPath}/home">첫번째 페이지</a>
+				
+				<c:if test="${currentPage < lastPage}">
+					<a href="${pageContext.request.contextPath}/home?currentPage=${currentPage+1}&searchWord=${searchWord}">다음 &gt;</a>
+				</c:if>
                     <!-- Pager-->
                     <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="#!">Older Posts →</a></div>
                 </div>

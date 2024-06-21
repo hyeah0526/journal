@@ -17,6 +17,7 @@ public class JournalApplication implements WebMvcConfigurer{
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		
+		// <img alt="" src="/journal/img/${b.fileName}">
 		registry.addResourceHandler("/img/**").addResourceLocations("file:///c:/upload/");
 	}
 	

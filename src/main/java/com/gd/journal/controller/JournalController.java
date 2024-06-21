@@ -16,4 +16,10 @@ public class JournalController {
 		
 		return "test";
 	}
+	
+	@GetMapping("/home")
+	public String home() {
+		
+		return "home";
+	}
 }

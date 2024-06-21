@@ -1,10 +1,13 @@
 package com.gd.journal.service;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.gd.journal.mapper.MemberMapper;
+import com.gd.journal.utill.Debug;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -14,9 +17,10 @@ import lombok.extern.slf4j.Slf4j;
 public class MemberService {
 	@Autowired MemberMapper memberMapper;
 	
-	public String getLoginMember(String memberId, String memberPw) {
+	public Map<String, String> getLoginMember(String memberId, String memberPw) {
 		
-		String login = memberMapper.selectLoginMember(memberId, memberPw);
+		Map<String, String> login = memberMapper.selectLoginMember(memberId, memberPw);
+		log.debug(Debug.PHA+"login--> "+login+Debug.END);
 		
 		return login;
 	}

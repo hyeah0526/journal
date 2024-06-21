@@ -13,4 +13,7 @@ public interface JournalMapper {
 	
 	// 전체 조회 총 카운트
 	int selectJournalTotalCnt(String searchWord);
+	
+	// 상세조회
+	Map<String, Object> selectJournalOne(int journalNo);
 }

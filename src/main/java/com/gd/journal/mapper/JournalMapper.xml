@@ -22,6 +22,7 @@
 		LIMIT #{beginRow}, #{rowPerPage}
 	</select>
 	
+	
 	<!-- 전체조회 총 개수 -->
 	<select id="selectJournalTotalCnt" resultType="int" parameterType="String">
 		SELECT COUNT(*) cnt
@@ -35,5 +36,20 @@
 				j.title LIKE CONCAT('%',#{searchWord},'%')
 			</if>
 		</where>
+	</select>
+	
+	
+	<!-- 상세조회 -->
+	<select id="selectJournalOne" resultType="map" parameterType="int">
+		SELECT j.journal_no journalNo, j.title title, j.content content
+				, j.update_date updateDate, j.create_date createDate
+				, f.file_no fileNo, f.file_name fileName, f.original_name originalName
+				, m.member_id memberId, m.name name
+		FROM journal j
+		INNER JOIN journal_file f 
+			ON j.journal_no = f.journal_no
+		INNER JOIN member m 
+			ON j.member_id = m.member_id
+		WHERE j.journal_no = #{journalNo};
 	</select>
 </mapper>

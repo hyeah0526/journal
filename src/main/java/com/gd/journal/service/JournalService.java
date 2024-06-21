@@ -1,6 +1,7 @@
 package com.gd.journal.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -19,6 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 public class JournalService {
 	@Autowired JournalMapper journalMapper;
 	
+	/* 전체 조회 */
 	public List<Map<String, Object>> getJournalList(int currentPage, int rowPerPage, String searchWord) {
 		
 		// 받아온 값 디버깅
@@ -40,7 +42,7 @@ public class JournalService {
 	}
 	
 	
-	/* 페이징 - 라이트페이지 */
+	/* 전체조회 페이징 - 라이트페이지 */
 	public int getLastPage(int rowPerPage, String searchWord) {
 		
 		// 총 행의 개수구하기
@@ -55,6 +57,20 @@ public class JournalService {
 		log.debug(Debug.PHA + "lastPage --> " + lastPage + Debug.END);
 
 		return lastPage;
+	}
+	
+	
+	/* 상세조회 */
+	public Map<String, Object> getjournalOne(int journalNo){
+		log.debug(Debug.PHA + "journalNo --> " + journalNo + Debug.END);
+		
+		// 상세조회
+		Map<String, Object> map = journalMapper.selectJournalOne(journalNo);
+		
+		log.debug(Debug.PHA + "map --> " + map + Debug.END);
+		
+		
+		return map;
 	}
 	
 }

@@ -1,0 +1,27 @@
+@charset "UTF-8";
+
+.homeSearchDiv{
+	text-align: center;
+}
+
+.pagingDiv{
+	text-align: center;
+	margin-top: 3%;
+	margin-bottom: 3%;
+}
+
+.paging{
+	font-style: italic;
+	font-size: 1.50rem;
+	text-align : center;
+	font-weight: bold;
+}
+
+.pagingHome{
+	margin-left: 10%;
+	margin-right: 10%;
+	font-style: italic;
+	font-size: 1.125rem;
+	text-align : center;
+	font-weight: bold;
+}

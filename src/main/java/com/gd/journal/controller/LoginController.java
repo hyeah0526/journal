@@ -1,12 +1,16 @@
 package com.gd.journal.controller;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.gd.journal.service.MemberService;
+import com.gd.journal.utill.Debug;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
@@ -31,10 +35,12 @@ public class LoginController {
 		log.debug(memberId+"<--memberId");
 		log.debug(memberPw+"<--memberPw");
 		
-		String loginChk = memberService.getLoginMember(memberId, memberPw);
+		Map<String, String> loginChk = memberService.getLoginMember(memberId, memberPw);
+		log.debug(Debug.PHA+"loginChk--> "+loginChk+Debug.END);
 		if(loginChk != null) {
-			log.debug("로그인 성공");
-			session.setAttribute("loginUser", memberId);
+			log.debug(Debug.PHA+"로그인 성공"+Debug.END);
+			session.setAttribute("loginUser", loginChk.get("memberId"));
+			session.setAttribute("loginUserName", loginChk.get("name"));
 		}
 		
 		/*
@@ -48,7 +54,7 @@ public class LoginController {
 		
 		
 		
-		return "redirect:/auth/on";
+		return "redirect:/auth/home";
 	}
 	
 	

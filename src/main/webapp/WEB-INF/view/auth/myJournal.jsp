@@ -9,7 +9,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 	<meta name="description" content="" />
 	<meta name="author" content="" />
-	<title>journalPost</title>
+	<title>Journal Detail</title>
 	<link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
 	<!-- Font Awesome icons (free version)-->
 	<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
@@ -50,8 +50,8 @@
 			<div class="row gx-4 gx-lg-5 justify-content-center">
 				<div class="col-md-10 col-lg-8 col-xl-7">
 					<div class="site-heading">
-						<h1>journal Post</h1>
-						<span class="subheading">저널을 등록하세요</span>
+						<h1>My Journal</h1>
+						<span class="subheading">내가 작성한 저널을 확인하세요</span>
 					</div>
 				</div>
 			</div>
@@ -63,44 +63,66 @@
 	<div class="container px-4 px-lg-5">
 		<div class="row gx-4 gx-lg-5 justify-content-center">
 			<div class="col-md-10 col-lg-8 col-xl-7">
-				<!-- 저널 등록 폼 -->
-				<form method="post" enctype="multipart/form-data" action="${pageContext.request.contextPath}/auth/journalPost">
-					<table border="1">
-						<tr>
-							<th>Title</th>
-							<td><input type="text" name="title"></td>
-						</tr>
-						<tr>
-							<th>Journal</th>
-							<td>
-								<input type="radio" name="type" value="movie" checked="checked">Movie &nbsp;
-								<input type="radio" name="type" value="book">Book &nbsp;
-								<input type="radio" name="type" value="etc">etc
-							</td>
-						</tr>
-						<tr>
-							<th>File</th>
-							<td><input type="file" name="journalFile"></td>
-						</tr>
-						<tr>
-							<th>Content</th>
-							<td><textarea name="content"></textarea></td>
-						</tr>
-						<tr>
-							<td colspan="2">
-                				<button type="submit" class="btn btn-primary text-uppercase">Post</button>
-							</td>
-						</tr>
-					</table>
-					<input type="hidden" name="memberId" value="${loginUser}">
-				</form><br><br>
+				<!-- 상세조회 출력 부분 -->
+				<c:forEach var="b" items="${list}">
+					<div class="post-preview">
+						<a href="${pageContext.request.contextPath}/auth/journalDetail?journalNo=${b.journalNo}">
+							<h2 class="post-title">${b.title}</h2>
+                            <h3 class="post-subtitle">
+								<c:if test="${b.fileName eq 'noCover.png'}"><img src="../resources/inc/${b.fileName}"></c:if>
+								<c:if test="${b.fileName ne 'noCover.png'}"><img src="/journal/img/${b.fileName}"></c:if>
+								${b.content}
+							</h3>
+						</a>
+						<p class="post-meta">
+							Posted by
+							<a href="#!">${b.name}(${b.memberId})</a>
+							on ${b.updateDate}
+						</p>
+                    </div>
+					<!-- <hr>구분 부분 Divider-->
+					<hr class="my-4" />
+				</c:forEach>
+				
+				<!-- 제목으로 검색하기 -->
+				<div class="homeSearchDiv">
+					<form method="get" action="${pageContext.request.contextPath}/auth/myJournal">
+						<input name="searchWord">
+						<button class="btn btn-primary text-uppercase" type="submit">Title Search</button>
+					</form>
+				</div>
+				 
+				<!-- 페이징 -->
+				<!-- 이전페이지 -->
+				<div class="pagingDiv">
+					<c:choose>
+						<c:when test="${currentPage > 1}">
+							<a class="paging" href="${pageContext.request.contextPath}/auth/myJournal?currentPage=${currentPage-1}&searchWord=${searchWord}">◀</a>
+						</c:when>
+						<c:otherwise>
+							<a class="paging">◀</a>
+						</c:otherwise>
+					</c:choose>
+					
+					<!-- 첫페이지 고정 -->
+					<a class="pagingHome" href="${pageContext.request.contextPath}/auth/myJournal">F i r s t&nbsp;&nbsp;&nbsp;P a g e</a>
+					
+					<!-- 다음페이지 -->
+					<c:choose>
+						<c:when test="${currentPage < lastPage}">
+							<a class="paging" href="${pageContext.request.contextPath}/auth/myJournal?currentPage=${currentPage+1}&searchWord=${searchWord}">▶</a>
+						</c:when>
+						<c:otherwise>
+							<a class="paging">▶</a>
+	    				</c:otherwise>
+					</c:choose>
+				</div>
 				
 				
-				<!-- 뒤로가기 -->
-				<span class="justify-content-start mb-4" style="float: inline-start;">
-					<a class="btn btn-primary text-uppercase" onclick="history.back()">← Back</a>
-		        </span>
-				
+                <!-- 전체목록으로 이동 -->
+                <div class="d-flex justify-content-end mb-4">
+                	<a class="btn btn-primary text-uppercase" href="${pageContext.request.contextPath}/auth/journalPost">Journal Post →</a>
+                </div>
 			</div>
 		</div>
 	</div>

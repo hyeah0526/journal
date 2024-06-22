@@ -31,29 +31,44 @@ public class JournalService {
 	public List<Map<String, Object>> getJournalList(int currentPage, int rowPerPage, String searchWord) {
 		
 		// 받아온 값 디버깅
-		log.debug(Debug.PHA + "currentPage--> " + currentPage + Debug.END);
-		log.debug(Debug.PHA + "rowPerPage--> " + rowPerPage + Debug.END);
-		log.debug(Debug.PHA + "searchWord--> " + searchWord + Debug.END);
+		//log.debug(Debug.PHA + "currentPage--> " + currentPage + Debug.END);
+		//log.debug(Debug.PHA + "rowPerPage--> " + rowPerPage + Debug.END);
+		//log.debug(Debug.PHA + "searchWord--> " + searchWord + Debug.END);
 		
 		int beginRow = (currentPage-1)*rowPerPage;
-		log.debug(Debug.PHA + "beginRow--> " + beginRow + Debug.END);
+		//log.debug(Debug.PHA + "beginRow--> " + beginRow + Debug.END);
 		
 		List<Map<String, Object>> list = new ArrayList<>();
 		list = journalMapper.selectJournalList(beginRow, rowPerPage, searchWord);
 		
-		
-		log.debug(Debug.PHA + "list--> " + list + Debug.END);
+		//log.debug(Debug.PHA + "list--> " + list + Debug.END);
 		
 		
 		return list;
 	}
 	
+	/* 내가 작성한 저널 조회 */
+	public List<Map<String, Object>> getMyJournal(int currentPage, int rowPerPage, String searchWord, String memberId){
+		
+		// beginRow구하기
+		int beginRow = (currentPage-1)*rowPerPage;
+		
+		// list에 담기
+		List<Map<String, Object>> list = new ArrayList<>();
+		list = journalMapper.selectMyJournalList(beginRow, rowPerPage, searchWord, memberId);
+		log.debug(Debug.PHA + "list--> " + list + Debug.END);
+		
+		return list;
+	}
 	
-	/* 전체조회 페이징 - 라이트페이지 */
-	public int getLastPage(int rowPerPage, String searchWord) {
+	
+	/* 조회 페이징 - 라이트페이지 */
+	public int getLastPage(int rowPerPage, String searchWord, String MemberId) {
+		
+		log.debug(Debug.PHA + "MemberId --> " + MemberId + Debug.END);
 		
 		// 총 행의 개수구하기
-		int totalCnt = journalMapper.selectJournalTotalCnt(searchWord);
+		int totalCnt = journalMapper.selectJournalTotalCnt(searchWord, MemberId);
 		log.debug(Debug.PHA + "totalCnt --> " + totalCnt + Debug.END);
 						
 		// 총행의 개수로 나머지 계산하기
@@ -65,6 +80,8 @@ public class JournalService {
 
 		return lastPage;
 	}
+	
+	
 	
 	
 	/* 상세조회 */

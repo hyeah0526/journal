@@ -19,6 +19,7 @@ import com.gd.journal.dto.JournalPost;
 import com.gd.journal.service.JournalService;
 import com.gd.journal.utill.Debug;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
  
 @Slf4j
@@ -27,7 +28,7 @@ public class JournalController {
 	
 	@Autowired JournalService journalService;
 	
-	/* 메인페이지 */
+	/* 메인페이지 - 전체조회 */
 	@GetMapping("/auth/home")
 	public String home(Model model
 						,@RequestParam(name="currentPage", defaultValue="1") int currentPage
@@ -37,10 +38,11 @@ public class JournalController {
 		//log.debug(Debug.PHA + "currentPage --> " + currentPage + Debug.END);
 		//log.debug(Debug.PHA + "rowPerPage --> " + rowPerPage + Debug.END);
 		//log.debug(Debug.PHA + "searchWord --> " + searchWord + Debug.END);
+		String memberId="";
 		
 		// 전체 조회
 		List<Map<String, Object>> list = journalService.getJournalList(currentPage, rowPerPage, searchWord);
-		int lastPage = journalService.getLastPage(rowPerPage, searchWord);
+		int lastPage = journalService.getLastPage(rowPerPage, searchWord, memberId);
 		
 		model.addAttribute("list", list);	// 전체 조회
 		model.addAttribute("lastPage", lastPage);	// 마지막 페이지
@@ -51,6 +53,36 @@ public class JournalController {
 		return "/auth/home";
 	}
 	
+	/* 전체 저널 조회 */
+	@GetMapping("/auth/otherJournal")
+	public String otherJournal() {
+		
+		return"/auth/otherJournal";
+	}
+	
+	
+	/* 내가 작성한 저널보기 */
+	@GetMapping("/auth/myJournal")
+	public String myJournal(Model model
+			,@RequestParam(name="currentPage", defaultValue="1") int currentPage
+			,@RequestParam(name="rowPerPage", defaultValue="3") int rowPerPage
+			,@RequestParam(name="searchWord", defaultValue="") String searchWord
+			,HttpSession session) {
+		
+		String memberId = (String)session.getAttribute("loginUser");
+		log.debug(Debug.PHA + "memberId --> " + memberId + Debug.END);
+		
+		List<Map<String, Object>> list = journalService.getMyJournal(currentPage, rowPerPage, searchWord, memberId);
+		int lastPage = journalService.getLastPage(rowPerPage, searchWord, memberId);
+		
+		model.addAttribute("list", list);	// 전체 조회
+		model.addAttribute("lastPage", lastPage);	// 마지막 페이지
+		model.addAttribute("rowPerPage", rowPerPage);	// 한페이지당 보여줄 수
+		model.addAttribute("currentPage", currentPage);	// 최근 페이지
+		model.addAttribute("searchWord", searchWord);	// 검색어
+		
+		return "/auth/myJournal";
+	}
 	
 	/* 저널 상세보기 */
 	@GetMapping("/auth/journalDetail")
@@ -91,22 +123,8 @@ public class JournalController {
 		
 		return"redirect:/auth/journalDetail?journalNo="+journalEdit.getJournalNo(); // 리다이렉트
 	}
-		
+
 	
-	/* 본인이 작성한 저널 보기 */
-	@GetMapping("/auth/myJournal")
-	public String myJournal() {
-		
-		return"/auth/myJournal";
-	}
-	
-	
-	/* 전체 저널 조회 */
-	@GetMapping("/auth/otherJournal")
-	public String otherJournal() {
-		
-		return"/auth/otherJournal";
-	}
 	
 	/* 저널 등록하기 */
 	@GetMapping("/auth/journalPost")

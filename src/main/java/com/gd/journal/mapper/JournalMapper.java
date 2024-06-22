@@ -14,8 +14,11 @@ public interface JournalMapper {
 	// 전체 조회
 	List<Map<String, Object>> selectJournalList(int beginRow, int rowPerPage, String searchWord);
 	
-	// 전체 조회 총 카운트
-	int selectJournalTotalCnt(String searchWord);
+	// 내가 작성한 저널 조회
+	List<Map<String, Object>> selectMyJournalList(int beginRow, int rowPerPage, String searchWord, String memberId);
+	
+	// 페이지용 조회 총 카운트
+	int selectJournalTotalCnt(String searchWord, String MemberId);
 	
 	// 상세조회
 	Map<String, Object> selectJournalOne(int journalNo);

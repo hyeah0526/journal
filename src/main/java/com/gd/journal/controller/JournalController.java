@@ -7,9 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.gd.journal.dto.Journal;
+import com.gd.journal.dto.JournalPost;
 import com.gd.journal.service.JournalService;
 import com.gd.journal.utill.Debug;
 
@@ -78,5 +82,29 @@ public class JournalController {
 	public String otherJournal() {
 		
 		return"/auth/otherJournal";
+	}
+	
+	/* 저널 등록하기 */
+	@GetMapping("/auth/journalPost")
+	public String journalPost() {
+		
+		return"/auth/journalPost";
+	}
+	
+	@PostMapping("/auth/journalPost")
+	public String journalPost(JournalPost journalpost) {
+		
+		// 디버깅
+		//log.debug(Debug.PHA + "journal getMemberId --> " + journalpost.getMemberId() + Debug.END);
+		//log.debug(Debug.PHA + "journal getTitle --> " + journalpost.getTitle() + Debug.END);
+		//log.debug(Debug.PHA + "journal getType --> " + journalpost.getType() + Debug.END);
+		//log.debug(Debug.PHA + "journal getContent --> " + journalpost.getContent() + Debug.END);
+		//log.debug(Debug.PHA + "journal getJournalFile --> " + journalpost.getJournalFile().getOriginalFilename() + Debug.END);
+		
+		// 저널등록 (journal / journal_file 테이블)
+		journalService.postJournal(journalpost);
+		
+		
+		return"redirect:/auth/myJournal"; // myJournal로 리다이렉트
 	}
 }

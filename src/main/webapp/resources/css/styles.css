@@ -10782,10 +10782,6 @@ header.masthead .post-heading .meta a {
   font-weight: 300;
   margin-bottom: 0.625rem;
 }
-.post-preview > a > .post-subtitle > img{
-	width: 200px;
-	height: 150px;
-}
 .post-preview > .post-meta {
   font-size: 1.125rem;
   font-style: italic;

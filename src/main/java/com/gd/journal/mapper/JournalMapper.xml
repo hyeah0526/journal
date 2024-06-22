@@ -52,4 +52,31 @@
 			ON j.member_id = m.member_id
 		WHERE j.journal_no = #{journalNo};
 	</select>
+	
+	
+	
+	<!-- 저널 등록 -->
+	<insert id="insertJournal" parameterType="com.gd.journal.dto.Journal">
+		<!-- 파일등록하기 위해서는 journal_no가 있어야하기 때문에 저장 -->
+		<selectKey order="AFTER" keyProperty="journalNo" resultType="int">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		
+		INSERT INTO journal(
+			member_id, title, type, content
+		)VALUES(
+			#{memberId}, #{title}, #{type}, #{content}
+		)
+	</insert>
+	
+	
+	
+	<!-- 저널파일 등록 -->
+	<insert id="insertJournalFile" parameterType="com.gd.journal.dto.JournalFile">
+		INSERT INTO journal_file(
+			journal_no, file_name, original_name, file_type, file_size
+		)VALUES(
+			#{journalNo}, #{fileName}, #{originalName}, #{fileType}, #{fileSize}
+		)
+	</insert>
 </mapper>

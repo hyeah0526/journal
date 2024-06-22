@@ -13,7 +13,7 @@ public class JournalFile {
 	private String fileName;
 	private String originalName;
 	private String fileType;
-	private String fileSize;
+	private long fileSize;
 	private String updateDate;
 	private String crateDate;
 

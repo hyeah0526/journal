@@ -5,6 +5,9 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.gd.journal.dto.Journal;
+import com.gd.journal.dto.JournalFile;
+
 @Mapper
 public interface JournalMapper {
 	
@@ -16,4 +19,11 @@ public interface JournalMapper {
 	
 	// 상세조회
 	Map<String, Object> selectJournalOne(int journalNo);
+	
+	// 저널 등록
+	int insertJournal(Journal journal);
+	
+	// 저널 파일 등록
+	int insertJournalFile(JournalFile journalFile);
+	
 }

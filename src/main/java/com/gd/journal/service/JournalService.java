@@ -1,14 +1,20 @@
 package com.gd.journal.service;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.gd.journal.dto.Journal;
+import com.gd.journal.dto.JournalFile;
+import com.gd.journal.dto.JournalPost;
 import com.gd.journal.mapper.JournalMapper;
 import com.gd.journal.utill.Debug;
 
@@ -71,6 +77,66 @@ public class JournalService {
 		
 		
 		return map;
+	}
+	
+	
+	/* 저널등록 */
+	public void postJournal(JournalPost journalPost) {
+		
+		// 1. journal 테이블에 insert하기 전 Journal DTO에 값 세팅
+		Journal journal = new Journal();
+		journal.setMemberId(journalPost.getMemberId());
+		journal.setTitle(journalPost.getTitle());
+		journal.setType(journalPost.getType());
+		journal.setContent(journalPost.getContent());
+		
+		// 2. journal테이블 insert하기
+		int insertJournal = journalMapper.insertJournal(journal);
+		if(insertJournal != 1) {
+			// 등록 실패시 예외 발생시키기
+			log.debug(Debug.PHA + "insertJournal에서 RuntimeException 발생! " + Debug.END);
+			throw new RuntimeException();
+		}
+		
+		// 3. journal_no 제대로 들어갔는지 확인하기
+		log.debug(Debug.PHA + "journalNo -> " + journal.getJournalNo() + Debug.END);
+		
+		// 4. journalNo를 가지고 journal_file테이블에 등록하기
+		MultipartFile mf = journalPost.getJournalFile(); // file 가져오기
+		JournalFile file = new JournalFile(); // file dto생성 후 값 저장
+		file.setJournalNo(journal.getJournalNo());
+		file.setOriginalName(mf.getOriginalFilename());
+		file.setFileType(mf.getContentType());
+		file.setFileSize(mf.getSize());
+		
+		// 4-1. file name 세팅
+		// prefix에 uuid를 사용해서 랜덤이름을 생성(-는 제거)
+		String prefix = UUID.randomUUID().toString().replace("-", "");
+		// 파일타입전(.의 위치)까지 길이를 담고
+		int p = mf.getOriginalFilename().lastIndexOf(".");
+		// 구해준 .의 위치부터 자른 후 suffix에 담아주기
+		String suffix = mf.getOriginalFilename().substring(p);
+		// uuid와 더해주고 file name 세팅하기
+		file.setFileName(prefix+suffix);
+		
+		// 5. journal_file테이블 insert 하기
+		int insertJournalPost = journalMapper.insertJournalFile(file);
+		if(insertJournalPost != 1) {
+			log.debug(Debug.PHA + "insertJournalPost에서 RuntimeException 발생! " + Debug.END);
+			// 등록 실패시 예외 발생시키기
+			throw new RuntimeException();
+		}
+		
+		// 6. 파일을 c드라이브 upload밑의 파일에 저장
+		File emptyFile = new File("c:/upload/"+prefix+suffix);
+		try {
+			// mf안에 있는 getinputStream을 가져와서 비어있는 emptyFile로 복사를 함 
+			mf.transferTo(emptyFile);
+		} catch (Exception e) {
+			log.debug(Debug.PHA + "emptyFile 파일저장에서 Exception 발생! " + Debug.END);
+			e.printStackTrace(); // 예외나면 전부 취소
+			throw new RuntimeException(); // 일부러 예외를 발생시켜서 위에도 했던 insert명령도 전부 취소
+		}
 	}
 	
 }

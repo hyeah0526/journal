@@ -11,6 +11,7 @@ public class Journal {
 	private int journalNo;
 	private String memberId;
 	private String title;
+	private String type;
 	private String content;
 	private String updateDate;
 	private String createDate;

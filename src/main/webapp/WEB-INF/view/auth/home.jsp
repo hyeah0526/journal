@@ -122,7 +122,7 @@
 				
                 <!-- 전체목록으로 이동 -->
                 <div class="d-flex justify-content-end mb-4">
-                	<a class="btn btn-primary text-uppercase" href="#!">Journal Post →</a>
+                	<a class="btn btn-primary text-uppercase" href="${pageContext.request.contextPath}/auth/journalPost">Journal Post →</a>
                 </div>
 			</div>
 		</div>

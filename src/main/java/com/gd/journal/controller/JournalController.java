@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.gd.journal.dto.Journal;
+import com.gd.journal.dto.JournalEdit;
+import com.gd.journal.dto.JournalFile;
 import com.gd.journal.dto.JournalPost;
 import com.gd.journal.service.JournalService;
 import com.gd.journal.utill.Debug;
@@ -56,11 +58,11 @@ public class JournalController {
 									,@RequestParam(name="journalNo") int journalNo
 									,@RequestParam(name="journalEdit", defaultValue="") String journalEdit) {
 		
-		log.debug(Debug.PHA + "journalNo --> " + journalNo + Debug.END);
-		log.debug(Debug.PHA + "journalEdit --> " + journalEdit + Debug.END);
+		//log.debug(Debug.PHA + "journalNo --> " + journalNo + Debug.END);
+		//log.debug(Debug.PHA + "journalEdit --> " + journalEdit + Debug.END);
 		
 		Map<String, Object> map = journalService.getjournalOne(journalNo);
-		log.debug(Debug.PHA + "map --> " + map + Debug.END);
+		//log.debug(Debug.PHA + "map --> " + map + Debug.END);
 		
 		model.addAttribute("map", map);	// 상세조회
 		model.addAttribute("journalEdit", journalEdit); // 수정확인용
@@ -68,6 +70,28 @@ public class JournalController {
 		return"/auth/journalDetail";
 	}
 	
+	/* 저널 수정하기 */
+	@PostMapping("/auth/journalDetail")
+	public String journalDetail(JournalEdit journalEdit) {
+		
+		// 디버깅
+		//log.debug(Debug.PHA + "journalNo --> " + journalEdit.getJournalNo() + Debug.END);
+		//log.debug(Debug.PHA + "getFileNo --> " + journalEdit.getFileNo() + Debug.END);
+		//log.debug(Debug.PHA + "getMemberId --> " + journalEdit.getMemberId()+ Debug.END);
+		//log.debug(Debug.PHA + "getType --> " + journalEdit.getType()+ Debug.END);
+		//log.debug(Debug.PHA + "getTitle --> " + journalEdit.getTitle()+ Debug.END);
+		//log.debug(Debug.PHA + "getContent --> " + journalEdit.getContent()+ Debug.END);
+		//log.debug(Debug.PHA + "getOldFileName --> " + journalEdit.getOldFileName()+ Debug.END);
+		//log.debug(Debug.PHA + "getNewFile --> " + journalEdit.getNewFile().getOriginalFilename()+ Debug.END);
+		
+		
+		// 수정
+		journalService.editJournal(journalEdit);
+		 
+		
+		return"redirect:/auth/journalDetail?journalNo="+journalEdit.getJournalNo(); // 리다이렉트
+	}
+		
 	
 	/* 본인이 작성한 저널 보기 */
 	@GetMapping("/auth/myJournal")
@@ -107,4 +131,20 @@ public class JournalController {
 		
 		return"redirect:/auth/myJournal"; // myJournal로 리다이렉트
 	}
+	
+	
+	/* 저널 삭제 */
+	@GetMapping("/auth/journalDelete")
+	public String journalDelete(@RequestParam(name="journalNo") int journalNo
+								,@RequestParam(name="fileName") String fileName) {
+		
+		//log.debug(Debug.PHA + "journalNo --> " + journalNo + Debug.END);
+		//log.debug(Debug.PHA + "fileName --> " + fileName + Debug.END);
+		
+		// 저널 삭제
+		journalService.deleteJournal(journalNo, fileName);
+		
+		return "redirect:/auth/home";
+	}
+	
 }

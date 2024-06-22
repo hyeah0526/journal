@@ -26,4 +26,16 @@ public interface JournalMapper {
 	// 저널 파일 등록
 	int insertJournalFile(JournalFile journalFile);
 	
+	// 저널 수정
+	int updateJournal(Journal journal);
+	
+	// 저널 파일 수정
+	int updateJournalFile(JournalFile journalFile);
+	
+	// 저널 삭제
+	int deleteJournal(int journalNo);
+	
+	// 저널 파일 삭제
+	int deleteJournalFile(int journalNo);
+	
 }

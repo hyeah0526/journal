@@ -41,7 +41,7 @@
 	
 	<!-- 상세조회 -->
 	<select id="selectJournalOne" resultType="map" parameterType="int">
-		SELECT j.journal_no journalNo, j.title title, j.content content
+		SELECT j.journal_no journalNo, j.title title, j.content content, j.type type
 				, j.update_date updateDate, j.create_date createDate
 				, f.file_no fileNo, f.file_name fileName, f.original_name originalName
 				, m.member_id memberId, m.name name
@@ -79,4 +79,54 @@
 			#{journalNo}, #{fileName}, #{originalName}, #{fileType}, #{fileSize}
 		)
 	</insert>
+	
+	
+	
+	<!-- 저널 수정 -->
+	<update id="updateJournal" parameterType="com.gd.journal.dto.Journal">
+		UPDATE journal
+		SET title = #{title}
+			, type = #{type}
+			, content = #{content}
+			, update_date = NOW()
+		WHERE journal_no = #{journalNo}
+		AND member_id = #{memberId}
+	</update>
+	
+	
+	
+	<!-- 저널파일 수정 -->
+	<update id="updateJournalFile" parameterType="com.gd.journal.dto.JournalFile">
+		UPDATE journal_file
+		SET file_name = #{fileName}
+			, original_name = #{originalName}
+			, file_type = #{fileType}
+			, file_size = #{fileSize}
+			, update_date = NOW()
+		WHERE journal_no = #{journalNo}
+		AND file_no = #{fileNo}
+	</update>
+	
+	
+	
+	<!-- 저널 삭제 -->
+	<delete id="deleteJournal" parameterType="int">
+		DELETE FROM journal
+		WHERE journal_no = #{journalNo}
+	</delete>
+	
+	
+	
+	<!-- 저널파일 삭제 -->
+	<delete id="deleteJournalFile" parameterType="int">
+		DELETE FROM journal_file
+		WHERE journal_no = #{journalNo}
+	</delete>
+	
+	
+	
+	
+	
+	
+	
 </mapper>

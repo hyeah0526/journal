@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.gd.journal.dto.Journal;
+import com.gd.journal.dto.JournalEdit;
 import com.gd.journal.dto.JournalFile;
 import com.gd.journal.dto.JournalPost;
 import com.gd.journal.mapper.JournalMapper;
@@ -138,5 +139,101 @@ public class JournalService {
 			throw new RuntimeException(); // 일부러 예외를 발생시켜서 위에도 했던 insert명령도 전부 취소
 		}
 	}
+	
+	
+	
+	/* 저널 수정 */
+	public void editJournal(JournalEdit journalEdit) {
+		
+		// journal 테이블 수정값 담기
+		Journal journal = new Journal();
+		journal.setJournalNo(journalEdit.getJournalNo());
+		journal.setMemberId(journalEdit.getMemberId());
+		journal.setTitle(journalEdit.getTitle());
+		journal.setType(journalEdit.getType());
+		journal.setContent(journalEdit.getContent());
+		
+		// journal 테이블 수정
+		int updateJournal = journalMapper.updateJournal(journal);
+		if(updateJournal != 1) {
+			// 등록 실패시 예외 발생시키기
+			throw new RuntimeException();
+		}
+		
+		// journal_file 테이블 수정
+		MultipartFile mf = journalEdit.getNewFile(); // file 가져오기
+		JournalFile file = new JournalFile(); // file dto생성 후 값 저장
+		file.setJournalNo(journalEdit.getJournalNo());
+		file.setFileNo(journalEdit.getFileNo());
+		file.setOriginalName(mf.getOriginalFilename());
+		file.setFileType(mf.getContentType());
+		file.setFileSize(mf.getSize());
+		
+		String prefix = UUID.randomUUID().toString().replace("-", "");
+		int p = mf.getOriginalFilename().lastIndexOf(".");
+		String suffix = mf.getOriginalFilename().substring(p);
+		file.setFileName(prefix+suffix);
+		
+		int updateJournalFile = journalMapper.updateJournalFile(file);
+		if(updateJournalFile != 1) {
+			// 수정 실패시 예외 발생시키기
+			throw new RuntimeException();
+		}
+		
+		// 폴더에 파일저장
+		File emptyFile = new File("c:/upload/"+prefix+suffix);
+		try {
+			// mf안에 있는 getinputStream을 가져와서 비어있는 emptyFile로 복사를 함 
+			mf.transferTo(emptyFile);
+			
+			// 기존 파일 삭제
+			String filePath = "c:/upload/" + journalEdit.getOldFileName();
+		    File fileDel = new File(filePath);
+		    fileDel.delete();
+		    
+		} catch (Exception e) {
+			e.printStackTrace(); // 예외나면 전부 취소
+			throw new RuntimeException(); // 일부러 예외를 발생시켜서 위에도 했던 insert명령도 전부 취소
+		}
+		
+		
+	}
+	
+	
+	/* 저널 삭제 */
+	public void deleteJournal(int journalNo, String fileName) {
+		
+		// 1. 저널 파일 먼저 삭제후
+		int deleteJournalFile = journalMapper.deleteJournalFile(journalNo);
+		if(deleteJournalFile != 1) {
+			// 수정 실패시 예외 발생시키기
+			throw new RuntimeException();
+		}
+		
+		
+		// 2. 저널 삭제
+		int deleteJournal = journalMapper.deleteJournal(journalNo);
+		if(deleteJournal != 1) {
+			// 수정 실패시 예외 발생시키기
+			throw new RuntimeException();
+		}
+		
+		
+		// 3. 폴더에서 이미지 삭제
+		try {
+			// 폴더 이미지에서 삭제
+			String filePath = "c:/upload/" + fileName;
+		    File fileDel = new File(filePath);
+		    fileDel.delete();
+		}catch (Exception e) {
+			e.printStackTrace(); // 예외나면 전부 취소
+			throw new RuntimeException(); // 일부러 예외를 발생시켜서 위에도 했던 delete명령도 전부 취소
+		}
+		
+		
+	}
+	
+	
+	
 	
 }

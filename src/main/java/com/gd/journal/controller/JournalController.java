@@ -17,6 +17,7 @@ import com.gd.journal.dto.JournalEdit;
 import com.gd.journal.dto.JournalFile;
 import com.gd.journal.dto.JournalPost;
 import com.gd.journal.service.JournalService;
+import com.gd.journal.service.MemberService;
 import com.gd.journal.utill.Debug;
 
 import jakarta.servlet.http.HttpSession;
@@ -27,6 +28,7 @@ import lombok.extern.slf4j.Slf4j;
 public class JournalController {
 	
 	@Autowired JournalService journalService;
+	@Autowired MemberService memberService;
 	
 	/* 메인페이지 - 전체조회 */
 	@GetMapping("/auth/home")
@@ -135,7 +137,7 @@ public class JournalController {
 	
 	@PostMapping("/auth/journalPost")
 	public String journalPost(JournalPost journalpost) {
-		
+		 
 		// 디버깅
 		//log.debug(Debug.PHA + "journal getMemberId --> " + journalpost.getMemberId() + Debug.END);
 		//log.debug(Debug.PHA + "journal getTitle --> " + journalpost.getTitle() + Debug.END);
@@ -162,7 +164,23 @@ public class JournalController {
 		// 저널 삭제
 		journalService.deleteJournal(journalNo, fileName);
 		
-		return "redirect:/auth/home";
+		return "redirect:/auth/home"; 
+	}
+	
+	
+	/* 마이페이지 조회 */
+	@GetMapping("/auth/myPage")
+	public String myPage(Model model, HttpSession session) {
+		
+		String memberId = (String)session.getAttribute("loginUser");
+		log.debug(Debug.PHA + "memberId --> " + memberId + Debug.END);
+		
+		Map<String, String> map = memberService.getMemberInfo(memberId);
+		
+		 model.addAttribute("map", map);
+		
+		
+		return "/auth/myPage"; 
 	}
 	
 }

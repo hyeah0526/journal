@@ -9,4 +9,11 @@
 		WHERE member_id = #{memberId}
 		AND member_pw = PASSWORD(#{memberPw})
 	</select>
+	
+	<!-- 회원 정보 조회 -->
+	<select id="selectmyPage" parameterType="String" resultType="map">
+		SELECT member_id memberId, name, birth
+		FROM member
+		WHERE member_id = #{memberId}
+	</select>
 </mapper>

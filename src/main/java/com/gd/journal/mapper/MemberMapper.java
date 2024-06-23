@@ -11,4 +11,6 @@ import com.gd.journal.dto.Member;
 public interface MemberMapper {
 	
 	Map<String, String> selectLoginMember(String memberId, String memberPw); 
+	
+	Map<String, String> selectmyPage(String memberId);
 }

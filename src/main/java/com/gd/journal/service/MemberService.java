@@ -37,4 +37,16 @@ public class MemberService {
 		
 	}
 	
+	/* 아이디 중복확인 */
+	public String getIdDoubleChk(String memberId) {
+		
+		String idChk = memberMapper.selectIdDoubleChk(memberId);
+		if(idChk == null) {
+			idChk = memberId;
+		}
+				
+		return idChk;
+		
+	}
+	
 }

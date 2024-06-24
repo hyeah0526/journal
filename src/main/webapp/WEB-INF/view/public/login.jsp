@@ -6,8 +6,7 @@
 <title>login</title>
 </head>
 <body style="margin: 100px; text-align: center;">
-	<%-- <h1>현재 접속자: ${currentCnt}</h1> --%>
-	<h1>로그인 안 했을때</h1>
+	<h1>로그인</h1>
 	
 	<form method="post" action="${pageContext.request.contextPath}/public/login">
 		<div>
@@ -17,6 +16,8 @@
 			pw : <input type="password" name="memberPw">
 		</div>
 		<button>로그인</button>
-	</form>
+	</form><br>
+	
+	<a href="${pageContext.request.contextPath}/public/signUp"><button>회원가입</button></a>
 </body>
 </html>

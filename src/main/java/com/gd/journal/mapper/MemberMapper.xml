@@ -16,4 +16,12 @@
 		FROM member
 		WHERE member_id = #{memberId}
 	</select>
+	
+	
+	<!-- 아이디 중복 체크 -->
+	<select id="selectIdDoubleChk" parameterType="String" resultType="String">
+		SELECT member_id memberId
+		FROM member
+		WHERE member_id = #{memberId}
+	</select>
 </mapper>

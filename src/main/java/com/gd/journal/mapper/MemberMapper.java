@@ -13,4 +13,7 @@ public interface MemberMapper {
 	Map<String, String> selectLoginMember(String memberId, String memberPw); 
 	
 	Map<String, String> selectmyPage(String memberId);
+	
+	// 아이디 중복체크
+	String selectIdDoubleChk(String memberId);
 }

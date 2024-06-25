@@ -21,6 +21,12 @@ public class LoginController {
 	
 	@Autowired MemberService memberService;
 	
+	// 테스트
+	@GetMapping("/test")
+	public String test() { 
+		return "/test";
+	}
+	
 	// 로그인 폼
 	@GetMapping("/public/login")
 	public String login() { 
@@ -76,21 +82,6 @@ public class LoginController {
 	// 회원가입 폼
 	@GetMapping("/public/signUp")
 	public String signUp() { 
-		return "/public/signUp";
-	}
-	
-	
-	// 아이디 중복 확인
-	
-	@GetMapping("/public/idChk")
-	public String idChk(Model model, @RequestParam(name="memberId") String memberId) {
-		log.debug(Debug.PHA+"아이디 중복확인" + memberId +Debug.END);
-		
-		String idChk = memberService.getIdDoubleChk(memberId); 
-		log.debug(Debug.PHA+"아이디 중복확인22" + idChk +Debug.END);
-		
-		model.addAttribute("idChk", idChk);
-		
 		return "/public/signUp";
 	}
 	

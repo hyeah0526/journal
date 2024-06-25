@@ -41,8 +41,11 @@ public class MemberService {
 	public String getIdDoubleChk(String memberId) {
 		
 		String idChk = memberMapper.selectIdDoubleChk(memberId);
-		if(idChk == null) {
+		if(idChk == null) { // 아이디 사용 가능
 			idChk = memberId;
+			
+		}else { // 아이디 사용 불가
+			idChk = "";
 		}
 				
 		return idChk;

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.gd.journal.dto.Member;
 import com.gd.journal.service.MemberService;
 import com.gd.journal.utill.Debug;
 
@@ -83,6 +84,18 @@ public class LoginController {
 	@GetMapping("/public/signUp")
 	public String signUp() { 
 		return "/public/signUp";
+	}
+	
+	// 회원가입하기
+	@PostMapping("public/signUpForm")
+	public String signUp(Member member) {
+		log.debug(Debug.PHA+"member getMemberId--> "+ member.getMemberId() +Debug.END);
+		log.debug(Debug.PHA+"member getName--> "+ member.getName() +Debug.END);
+		log.debug(Debug.PHA+"member getMemberPw--> "+ member.getMemberPw() +Debug.END);
+		log.debug(Debug.PHA+"member getBirth--> "+ member.getBirth() +Debug.END);
+		
+		
+		return "redirect:/public/login";
 	}
 	
 	

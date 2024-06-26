@@ -16,4 +16,7 @@ public interface MemberMapper {
 	
 	// 아이디 중복체크
 	String selectIdDoubleChk(String memberId);
+	
+	// 아이디 등록
+	String insertMember(Member member);
 }

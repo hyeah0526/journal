@@ -24,4 +24,12 @@
 		FROM member
 		WHERE member_id = #{memberId}
 	</select>
+	
+	<!-- 회원등록 -->
+	<insert id="insertMember" parameterType="com.gd.journal.dto.Member">
+		INSERT INTO member(
+			member_id, member_pw, name, birth
+		)VALUES(
+			#{}, PASSWORD(#{}), #{}, #{})
+	</insert>
 </mapper>

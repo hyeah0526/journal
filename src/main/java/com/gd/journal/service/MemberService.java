@@ -28,9 +28,9 @@ public class MemberService {
 		return login;
 	}
 	
-	public Map<String, String> getMemberInfo(String memberId) {
+	public Map<String, Object> getMemberInfo(String memberId) {
 		
-		Map<String, String> member = memberMapper.selectmyPage(memberId);
+		Map<String, Object> member = memberMapper.selectmyPage(memberId);
 		log.debug(Debug.PHA+"member--> "+member+Debug.END);
 		
 		

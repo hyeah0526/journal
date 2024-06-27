@@ -20,44 +20,12 @@
 	<link href="../resources/css/styles.css" rel="stylesheet" />
 	<!-- 개인 적용 CSS-->
 	<link href="../resources/css/styles_2.css" rel="stylesheet" />
+	<!-- jQuery -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
-	<!-- 내비게이션 Navigation-->
-	<nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
-		<div class="container px-4 px-lg-5">
-			<a class="navbar-brand" href="${pageContext.request.contextPath}/auth/home">Journal For You</a>
-			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
-				data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                    Menu
-					<i class="fas fa-bars"></i>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarResponsive">
-				<ul class="navbar-nav ms-auto py-4 py-lg-0">
-					<li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="${pageContext.request.contextPath}/auth/home">Home</a></li>
-					<li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="${pageContext.request.contextPath}/auth/myJournal">My Journal</a></li>
-					<li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="${pageContext.request.contextPath}/auth/myPage">MyPage</a></li>
-					<li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4">Welcome, ${loginUserName} !</a></li>
-					<li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="${pageContext.request.contextPath}/logout">logout</a></li>
-				</ul>
-			</div>
-		</div>
-	</nav>
-        
-        
-	<!-- 헤더 Page Header-->
-	<header class="masthead" style="background-image: url('../resources/assets/img/about-bg.jpg')">
-		<div class="container position-relative px-4 px-lg-5">
-			<div class="row gx-4 gx-lg-5 justify-content-center">
-				<div class="col-md-10 col-lg-8 col-xl-7">
-					<div class="site-heading">
-						<h1>journal Post</h1>
-						<span class="subheading">저널을 등록하세요</span>
-					</div>
-				</div>
-			</div>
-		</div>
-	</header>
-        
+	<!-- 헤더Hearder /내비게이션 Navigation-->
+	<jsp:include page="/WEB-INF/view/auth/header.jsp"></jsp:include>
         
 	<!-- 메인 Main Content-->
 	<div class="container px-4 px-lg-5">

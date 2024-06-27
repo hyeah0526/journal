@@ -85,6 +85,11 @@ public class JournalController {
 		model.addAttribute("rowPerPage", rowPerPage);	// 한페이지당 보여줄 수
 		model.addAttribute("currentPage", currentPage);	// 최근 페이지
 		model.addAttribute("searchWord", searchWord);	// 검색어
+		if (list.size() == 0) {
+			//log.debug(Debug.PHA + "결과없음" + Debug.END);
+			model.addAttribute("noPosting", "noPosting");
+		}
+		model.addAttribute("searchWord", searchWord);	// 결과없을 경우
 		
 		return "/auth/myJournal";
 	}
@@ -170,20 +175,13 @@ public class JournalController {
 		return "redirect:/auth/home"; 
 	}
 	
-	
-	/* 마이페이지 조회 */
-	@GetMapping("/auth/myPage")
-	public String myPage(Model model, HttpSession session) {
+	/* 헤더 */
+	@GetMapping("/auth/header")
+	public String header() {
 		
-		String memberId = (String)session.getAttribute("loginUser");
-		log.debug(Debug.PHA + "memberId --> " + memberId + Debug.END);
-		
-		Map<String, String> map = memberService.getMemberInfo(memberId);
-		
-		 model.addAttribute("map", map);
-		
-		
-		return "/auth/myPage"; 
+		return"/auth/header"; 
 	}
+	
+	
 	
 }

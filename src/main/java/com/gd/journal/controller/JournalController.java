@@ -35,7 +35,8 @@ public class JournalController {
 	public String home(Model model
 						,@RequestParam(name="currentPage", defaultValue="1") int currentPage
 						,@RequestParam(name="rowPerPage", defaultValue="3") int rowPerPage
-						,@RequestParam(name="searchWord", defaultValue="") String searchWord) {
+						,@RequestParam(name="searchWord", defaultValue="") String searchWord
+						,@RequestParam(name="searchType", defaultValue="") String searchType) {
 		// 디버깅
 		//log.debug(Debug.PHA + "currentPage --> " + currentPage + Debug.END);
 		//log.debug(Debug.PHA + "rowPerPage --> " + rowPerPage + Debug.END);
@@ -44,7 +45,7 @@ public class JournalController {
 		
 		// 전체 조회
 		List<Map<String, Object>> list = journalService.getJournalList(currentPage, rowPerPage, searchWord);
-		int lastPage = journalService.getLastPage(rowPerPage, searchWord, memberId);
+		int lastPage = journalService.getLastPage(rowPerPage, searchWord, memberId, searchType);
 		
 		model.addAttribute("list", list);	// 전체 조회
 		model.addAttribute("lastPage", lastPage);	// 마지막 페이지
@@ -67,15 +68,17 @@ public class JournalController {
 	@GetMapping("/auth/myJournal")
 	public String myJournal(Model model
 			,@RequestParam(name="currentPage", defaultValue="1") int currentPage
-			,@RequestParam(name="rowPerPage", defaultValue="3") int rowPerPage
+			,@RequestParam(name="rowPerPage", defaultValue="8") int rowPerPage
 			,@RequestParam(name="searchWord", defaultValue="") String searchWord
+			,@RequestParam(name="searchType", defaultValue="") String searchType
 			,HttpSession session) {
+		log.debug(Debug.PHA + "searchType --> " + searchType + Debug.END);
 		
 		String memberId = (String)session.getAttribute("loginUser");
 		log.debug(Debug.PHA + "memberId --> " + memberId + Debug.END);
 		
-		List<Map<String, Object>> list = journalService.getMyJournal(currentPage, rowPerPage, searchWord, memberId);
-		int lastPage = journalService.getLastPage(rowPerPage, searchWord, memberId);
+		List<Map<String, Object>> list = journalService.getMyJournal(currentPage, rowPerPage, searchWord, memberId, searchType);
+		int lastPage = journalService.getLastPage(rowPerPage, searchWord, memberId, searchType);
 		
 		model.addAttribute("list", list);	// 전체 조회
 		model.addAttribute("lastPage", lastPage);	// 마지막 페이지

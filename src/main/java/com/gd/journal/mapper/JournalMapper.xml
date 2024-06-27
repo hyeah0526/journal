@@ -4,7 +4,7 @@
 
 	<!-- 전체조회 -->
 	<select id="selectJournalList" resultType="map" parameterType="int">
-		SELECT j.journal_no journalNo, j.title title, j.content content
+		SELECT j.journal_no journalNo, j.title title, left(j.content, 10) content
 				, j.update_date updateDate, j.create_date createDate
 				, f.file_no fileNo, f.file_name fileName
 				, m.member_id memberId, m.name name
@@ -38,6 +38,9 @@
 			<if test="searchWord != null">
 				AND j.title LIKE CONCAT('%',#{searchWord},'%')
 			</if>
+			<if test="searchType != null and searchType != ''">
+				AND j.type = #{searchType}
+			</if>
 				AND j.member_id = #{memberId}
 		</where>
 		ORDER BY j.update_date DESC
@@ -56,6 +59,9 @@
 		<where>
 			<if test="searchWord != null">
 				AND j.title LIKE CONCAT('%',#{searchWord},'%')
+			</if>
+			<if test="searchType != null and searchType != ''">
+				AND j.type = #{searchType}
 			</if>
 			<if test="MemberId != null and MemberId != ''">
 				AND j.member_id = #{MemberId}

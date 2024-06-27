@@ -94,7 +94,9 @@ public class LoginController {
 		log.debug(Debug.PHA+"member getMemberPw--> "+ member.getMemberPw() +Debug.END);
 		log.debug(Debug.PHA+"member getBirth--> "+ member.getBirth() +Debug.END);
 		
+		memberService.setMember(member);
 		
+		 
 		return "redirect:/public/login";
 	}
 	

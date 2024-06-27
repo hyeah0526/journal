@@ -71,7 +71,7 @@
                             <h3 class="post-subtitle">
 								<c:if test="${b.fileName eq 'noCover.png'}"><img src="../resources/inc/${b.fileName}"></c:if>
 								<c:if test="${b.fileName ne 'noCover.png'}"><img src="/journal/img/${b.fileName}"></c:if>
-								${b.content}
+								${b.content}......
 							</h3>
 						</a>
 						<p class="post-meta">

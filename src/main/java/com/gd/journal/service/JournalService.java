@@ -48,14 +48,14 @@ public class JournalService {
 	}
 	
 	/* 내가 작성한 저널 조회 */
-	public List<Map<String, Object>> getMyJournal(int currentPage, int rowPerPage, String searchWord, String memberId){
+	public List<Map<String, Object>> getMyJournal(int currentPage, int rowPerPage, String searchWord, String memberId, String searchType){
 		
 		// beginRow구하기
 		int beginRow = (currentPage-1)*rowPerPage;
 		
 		// list에 담기
 		List<Map<String, Object>> list = new ArrayList<>();
-		list = journalMapper.selectMyJournalList(beginRow, rowPerPage, searchWord, memberId);
+		list = journalMapper.selectMyJournalList(beginRow, rowPerPage, searchWord, memberId, searchType);
 		log.debug(Debug.PHA + "list--> " + list + Debug.END);
 		
 		return list;
@@ -63,12 +63,12 @@ public class JournalService {
 	
 	
 	/* 조회 페이징 - 라이트페이지 */
-	public int getLastPage(int rowPerPage, String searchWord, String MemberId) {
+	public int getLastPage(int rowPerPage, String searchWord, String MemberId, String searchType) {
 		
 		log.debug(Debug.PHA + "MemberId --> " + MemberId + Debug.END);
 		
 		// 총 행의 개수구하기
-		int totalCnt = journalMapper.selectJournalTotalCnt(searchWord, MemberId);
+		int totalCnt = journalMapper.selectJournalTotalCnt(searchWord, MemberId, searchType);
 		log.debug(Debug.PHA + "totalCnt --> " + totalCnt + Debug.END);
 						
 		// 총행의 개수로 나머지 계산하기

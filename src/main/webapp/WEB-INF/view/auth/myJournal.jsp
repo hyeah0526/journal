@@ -62,31 +62,30 @@
 	<!-- 메인 Main Content-->
 	<div class="container px-4 px-lg-5">
 		<div class="row gx-4 gx-lg-5 justify-content-center">
-			<div class="col-md-10 col-lg-8 col-xl-7">
+			<div class="col-md-10 col-lg-8 col-xl-9" style="width: 80%;">
 				<!-- 상세조회 출력 부분 -->
 				<c:forEach var="b" items="${list}">
-					<div class="post-preview">
+					<div class="post-preview" style="float: left; margin: 20px;">
 						<a href="${pageContext.request.contextPath}/auth/journalDetail?journalNo=${b.journalNo}">
-							<h2 class="post-title">${b.title}</h2>
                             <h3 class="post-subtitle">
 								<c:if test="${b.fileName eq 'noCover.png'}"><img src="../resources/inc/${b.fileName}"></c:if>
 								<c:if test="${b.fileName ne 'noCover.png'}"><img src="/journal/img/${b.fileName}"></c:if>
-								${b.content}
 							</h3>
 						</a>
-						<p class="post-meta">
-							Posted by
-							<a href="#!">${b.name}(${b.memberId})</a>
-							on ${b.updateDate}
-						</p>
+						<h5 style="text-align: center;">${b.title}</h5>
                     </div>
-					<!-- <hr>구분 부분 Divider-->
-					<hr class="my-4" />
 				</c:forEach>
+			</div>
 				
 				<!-- 제목으로 검색하기 -->
-				<div class="homeSearchDiv">
+				<div class="homeSearchDiv" style="float: none;">
 					<form method="get" action="${pageContext.request.contextPath}/auth/myJournal">
+						<select name="searchType">
+							<option value="all">ALL</option>
+							<option value="movie">MOVIE</option>
+							<option value="book">BOOK</option>
+							<option value="etc">Etc.</option>
+						</select>
 						<input name="searchWord">
 						<button class="btn btn-primary text-uppercase" type="submit">Title Search</button>
 					</form>
@@ -123,7 +122,6 @@
                 <div class="d-flex justify-content-end mb-4">
                 	<a class="btn btn-primary text-uppercase" href="${pageContext.request.contextPath}/auth/journalPost">Journal Post →</a>
                 </div>
-			</div>
 		</div>
 	</div>
         

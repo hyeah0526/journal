@@ -18,5 +18,5 @@ public interface MemberMapper {
 	String selectIdDoubleChk(String memberId);
 	
 	// 아이디 등록
-	String insertMember(Member member);
+	int insertMember(Member member);
 }

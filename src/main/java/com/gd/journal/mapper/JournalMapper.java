@@ -15,10 +15,10 @@ public interface JournalMapper {
 	List<Map<String, Object>> selectJournalList(int beginRow, int rowPerPage, String searchWord);
 	
 	// 내가 작성한 저널 조회
-	List<Map<String, Object>> selectMyJournalList(int beginRow, int rowPerPage, String searchWord, String memberId);
+	List<Map<String, Object>> selectMyJournalList(int beginRow, int rowPerPage, String searchWord, String memberId, String searchType);
 	
 	// 페이지용 조회 총 카운트
-	int selectJournalTotalCnt(String searchWord, String MemberId);
+	int selectJournalTotalCnt(String searchWord, String MemberId, String searchType);
 	
 	// 상세조회
 	Map<String, Object> selectJournalOne(int journalNo);

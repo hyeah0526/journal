@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.gd.journal.dto.Member;
 import com.gd.journal.mapper.MemberMapper;
 import com.gd.journal.utill.Debug;
 
@@ -50,6 +51,18 @@ public class MemberService {
 				
 		return idChk;
 		
+	}
+	
+	
+	/* 회원가입하디 */
+	public int setMember(Member member) {
+		
+		int insertMember = memberMapper.insertMember(member);
+		log.debug(Debug.PHA+"insertMember--> "+ insertMember + Debug.END);
+		
+		
+		
+		return insertMember;
 	}
 	
 }

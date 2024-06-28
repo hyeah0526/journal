@@ -24,8 +24,22 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
-	<!-- 헤더Hearder /내비게이션 Navigation-->
+	<!-- 내비게이션 Navigation-->
 	<jsp:include page="/WEB-INF/view/auth/header.jsp"></jsp:include>
+	
+	<!-- 헤더 Page Header-->
+    <header class="masthead" style="background-image: url('../resources/assets/img/journal_post.jpg')">
+        <div class="container position-relative px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    <div class="site-heading">
+                        <h1>Journal Post</h1>
+                        <span class="subheading">저널을 작성하세요</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
         
 	<!-- 메인 Main Content-->
 	<div class="container px-4 px-lg-5">
@@ -33,7 +47,7 @@
 			<div class="col-md-10 col-lg-8 col-xl-7">
 				<!-- 저널 등록 폼 -->
 				<form method="post" enctype="multipart/form-data" action="${pageContext.request.contextPath}/auth/journalPost">
-					<table border="1">
+					<table id="postFormTb">
 						<tr>
 							<th>Title</th>
 							<td><input type="text" name="title"></td>
@@ -52,10 +66,10 @@
 						</tr>
 						<tr>
 							<th>Content</th>
-							<td><textarea name="content"></textarea></td>
+							<td><textarea name="content" cols="30" style="height: 300px;"></textarea></td>
 						</tr>
 						<tr>
-							<td colspan="2">
+							<td colspan="2" style="text-align: center;">
                 				<button type="submit" class="btn btn-primary text-uppercase">Post</button>
 							</td>
 						</tr>
@@ -97,7 +111,7 @@
 							</a>
 						</li>
 						<li class="list-inline-item">
-							<a href="https://github.com/hyeah0526/journal">
+							<a href="https://github.com/hyeah0526/journal" target='_blank'>
 								<span class="fa-stack fa-lg">
 									<i class="fas fa-circle fa-stack-2x"></i>
 									<i class="fab fa-github fa-stack-1x fa-inverse"></i>

@@ -23,20 +23,6 @@
         </div>
     </nav>
     
-    <!-- 헤더 Page Header-->
-    <header class="masthead" style="background-image: url('../resources/assets/img/about-bg.jpg')">
-        <div class="container position-relative px-4 px-lg-5">
-            <div class="row gx-4 gx-lg-5 justify-content-center">
-                <div class="col-md-10 col-lg-8 col-xl-7">
-                    <div class="site-heading">
-                        <h1>My Page</h1>
-                        <span class="subheading">내 정보를 확인하세요</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
-    
     <!-- 마이페이지 모달창 -->
     <div id="modal" class="modal-overlay">
         <div class="modal-window" style="z-index: 1050;">

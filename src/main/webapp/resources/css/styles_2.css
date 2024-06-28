@@ -31,6 +31,21 @@
 	height: 250px;
 }
 
+#postFormTb{
+	margin-left:auto; 
+	margin-right:auto;
+}
+
+#postFormTb th{
+	height: 50px;
+	width: 150px;
+}
+
+#postFormTb td{
+	width: 400px;
+}
+
+
 /* 모달 */
 #modal.modal-overlay {
 	width: 100%;

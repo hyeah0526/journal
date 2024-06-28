@@ -8,6 +8,7 @@
 		FROM member
 		WHERE member_id = #{memberId}
 		AND member_pw = PASSWORD(#{memberPw})
+		AND active = 'ON'
 	</select>
 	
 	<!-- 회원 정보 조회 -->
@@ -15,6 +16,7 @@
 		SELECT member_id memberId, name, birth
 		FROM member
 		WHERE member_id = #{memberId}
+		AND active = 'ON'
 	</select>
 	
 	
@@ -32,4 +34,12 @@
 		)VALUES(
 			#{memberId}, PASSWORD(#{memberPw}), #{name}, #{birth})
 	</insert>
+	
+	<!-- 회원탈퇴 -->
+	<delete id="updateMember" parameterType="String">
+		UPDATE member 
+		SET active = 'OFF' 
+		WHERE member_id = #{memberId}
+		AND member_pw = PASSWORD(#{checkOutPw});
+	</delete>
 </mapper>

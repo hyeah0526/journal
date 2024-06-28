@@ -19,4 +19,7 @@ public interface MemberMapper {
 	
 	// 아이디 등록
 	int insertMember(Member member);
+	
+	// 회원 탈퇴(아이디 비활성화)
+	int updateMember(String memberId, String checkOutPw);
 }

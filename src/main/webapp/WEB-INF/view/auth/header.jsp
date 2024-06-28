@@ -44,7 +44,7 @@
             <div class="close-area">X</div>
             <div class="content" id="resultMember"></div>
             <div style="text-align: center;">
-            	<button class="btn btn-light text-uppercase">회원탈퇴</button>
+            	<button class="btn btn-light text-uppercase" id="memberRemoveBtn">회원탈퇴</button>
             </div>
         </div>
     </div>
@@ -61,8 +61,8 @@
 			success:function(json) {
 				console.log(json);
 				$('#resultMember').html(
-					'<p>아이디:'+json.memberId+'</p>'+
-					'<p>생년월일:'+json.birth+'</p>'
+					'<p>아이디: '+json.memberId+'</p>'+
+					'<p>생년월일: '+json.birth+'</p>'
 				);
 				
 				$('#resultMemberID').html(
@@ -97,7 +97,47 @@
 	modal.addEventListener("click", e => {
 		if (e.target === modal) {
  			modalOff();
-		}
+		};
+		
+		
+	// 회원 탈퇴 버튼을 눌렀을 때 알라트 보여주기 
+	$('#memberRemoveBtn').click(function(){
+		let checkOutPw = prompt('회원탈퇴를 원할 경우 비밀번호를 입력해주세요');
+		
+		// 비밀번호 입력을 했으면 보내기
+		if(checkOutPw){
+			console.log(checkOutPw);
+			console.log('비밀번호 입력 후 확인누름');
+			
+			$.ajax({
+				url: '${pageContext.request.contextPath}/auth/removeMember',
+				method: 'post',
+				data: {'checkOutPw':checkOutPw},
+				success:function(json) {
+					console.log(json+' < -----jsonn');
+					if(json == 0){
+						alert('탈퇴 처리에 실패하였습니다.');
+					}
+					if(json == 1){
+						alert('탈퇴 처리가 완료되었습니다.');
+						location.href = '${pageContext.request.contextPath}/public/login';
+					}
+				},
+				error : function(){
+					alert('비밀번호가 틀렸습니다. 다시 시도해주세요.');
+				}
+					
+			});
+			
+		};
+		
+		// 취소했을 경우
+		if(checkOut == null){
+			console.log('취소누름');
+			return false;
+		};
+		
+	});
             
 });
             

@@ -39,13 +39,35 @@ public class LoginRestController {
 	@PostMapping("/auth/header")
 	public Map<String, Object> header(HttpSession session) {
 		
-		String memberId = (String)session.getAttribute("loginUser");
+		String memberId = (String)session.getAttribute("loginUser"); 
 		log.debug(Debug.PHA + "memberId --> " + memberId + Debug.END);
 		
 		Map<String, Object> map = memberService.getMemberInfo(memberId);
 		log.debug(Debug.PHA + "map --> " + map + Debug.END);
 		
 		return map;  
+	}
+	
+	/* 회원탈퇴 */
+	@PostMapping("/auth/removeMember")
+	public int removeMember(HttpSession session
+								, @RequestParam(name="checkOutPw") String checkOutPw) {
+		
+		log.debug(Debug.PHA + "checkOutPw --> " + checkOutPw + Debug.END);
+		String memberId = (String)session.getAttribute("loginUser"); 
+		
+		// 비밀번호 검증
+		int deleteRow = memberService.removeMember(memberId, checkOutPw);
+		
+		// 탈퇴 실패
+		if(deleteRow == 0) { 
+			return 0;
+		}
+		
+		// 탈퇴 성공시 세션 죽이기
+		session.invalidate();
+		
+		return 1;
 	}
 	
 	

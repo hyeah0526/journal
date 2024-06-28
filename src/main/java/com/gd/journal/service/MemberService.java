@@ -54,7 +54,7 @@ public class MemberService {
 	}
 	
 	
-	/* 회원가입하디 */
+	/* 회원가입하기 */
 	public int setMember(Member member) {
 		
 		int insertMember = memberMapper.insertMember(member);
@@ -63,6 +63,19 @@ public class MemberService {
 		
 		
 		return insertMember;
+	}
+	
+	
+	/* 회원탈퇴하기 */
+	public int removeMember(String memberId, String checkOutPw) {
+		
+		// 탈퇴 진행 (active ON -> OFF변경)
+		int updateMember = memberMapper.updateMember(memberId, checkOutPw);
+		log.debug(Debug.PHA+"updateMember--> "+ updateMember + Debug.END);
+		
+		
+		
+		return updateMember;
 	}
 	
 }

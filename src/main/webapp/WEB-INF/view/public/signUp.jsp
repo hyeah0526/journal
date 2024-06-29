@@ -6,31 +6,81 @@
 <title>sign Up</title>
 <!-- jQuery사용 -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<style>
+	#loginBody{
+		margin: 100px; 
+		text-align: center;
+		background: url('../resources/assets/img/home-bg.jpg');
+		background-size: cover;
+	}
+	
+	#loginDiv{
+		margin: auto;
+		text-align: center;
+		width: 500px;
+		background: rgba(0, 133, 161, 0.5);
+		border-radius: 10px;
+		padding: 30px;
+		color: white;
+	}
+	
+	#loginDiv table{
+		text-align: center;
+		margin: auto;
+	}
+	
+	#loginDiv th{
+		width: 150px;
+		text-align: center;
+		height: 50px;
+	}
+	
+	#loginDiv input{
+		width: 150px;
+		text-align: center;
+		height: 30px;
+	}
+	
+	#loginBody button{
+		width: 100px;
+		height: 50px;
+		border: none;
+		border-radius: 10px;
+		background: rgba(255, 255, 255, 0.5);
+		color: white;
+	}
+	
+	#loginBody button:hover {
+		background: rgba(0, 133, 161, 0.9);
+	}
+</style>
 </head>
-<body>
-	<form action="${pageContext.request.contextPath}/public/signUpForm" method="post" id="signUpForm">
-		<table border="1">
-			<tr>
-				<th>아이디</th>
-				<td><input name="memberId" id="memberId" min="6"> </td>
-				<td><button type="button" id="checkIdBtn">아이디 중복확인</button> </td>
-			</tr>
-			<tr>
-				<th>비밀번호</th>
-				<td colspan="2"><input name="memberPw" type="password" id="memberPw"> </td>
-			</tr>
-			<tr>
-				<th>이름</th>
-				<td colspan="2"><input name="name" type="text" id="memberName"> </td>
-			</tr>
-			<tr>
-				<th>생년월일</th>
-				<td colspan="2"><input name="birth" type="date" id="memberBirth"> </td>
-			</tr>
-		</table>
-		<button type="button" id="signinBtn">회원가입</button>
-	</form>
-
+<body id="loginBody">
+	<div id="loginDiv">
+		<h1>회원가입</h1>
+		<form action="${pageContext.request.contextPath}/public/signUpForm" method="post" id="signUpForm">
+			<table>
+				<tr>
+					<th>아이디</th>
+					<td><input name="memberId" id="memberId" min="6"> </td>
+					<td><button type="button" id="checkIdBtn">중복확인</button> </td>
+				</tr>
+				<tr>
+					<th>비밀번호</th>
+					<td><input name="memberPw" type="password" id="memberPw"> </td>
+				</tr>
+				<tr>
+					<th>이름</th>
+					<td><input name="name" type="text" id="memberName"> </td>
+				</tr>
+				<tr>
+					<th>생년월일</th>
+					<td><input name="birth" type="date" id="memberBirth"> </td>
+				</tr>
+			</table>
+			<button type="button" id="signinBtn">등록하기</button>
+		</form>
+	</div>
 <script>
 	// 아이디 중복체크 버튼이 눌렸는지 확인하기
 	let isIdChecked = false;

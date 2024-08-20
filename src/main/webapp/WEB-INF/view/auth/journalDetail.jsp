@@ -47,11 +47,9 @@
 			<div class="col-md-10 col-lg-8 col-xl-7">
 				<!-- 상세조회 출력 부분 -->
 				<c:if test="${journalEdit ne 'edit' }">
-					<h2 class="post-title">${map.title}</h2>
-					<h3 class="post-title">${map.type}</h3>
+					<h2 class="post-title">[${map.type}]&nbsp;${map.title}</h2>
 					<span class="post-meta">작성자: ${map.name}</span><br>
-					<span class="post-meta">최종 작성일: ${map.updateDate}</span><br>
-					<span class="post-meta">파일 이름: ${map.originalName}</span>
+					<span class="post-meta">작성일: ${map.updateDate}</span><br>
 					
 					<hr class="my-4" />
 					

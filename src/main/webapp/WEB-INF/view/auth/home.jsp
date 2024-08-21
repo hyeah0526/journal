@@ -50,11 +50,11 @@
 					<div class="post-preview">
 						<a href="${pageContext.request.contextPath}/auth/journalDetail?journalNo=${b.journalNo}">
 							<h2 class="post-title">${b.title}</h2>
-                            <h3 class="post-subtitle">
+                            <h5 class="post-subtitle">
 								<c:if test="${b.fileName eq 'noCover.png'}"><img src="../resources/inc/${b.fileName}"></c:if>
 								<c:if test="${b.fileName ne 'noCover.png'}"><img src="/journal/img/${b.fileName}"></c:if>
 								${b.content}......
-							</h3>
+							</h5>
 						</a>
 						<p class="post-meta">
 							Posted by
